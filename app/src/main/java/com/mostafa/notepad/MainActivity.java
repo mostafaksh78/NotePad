@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int color = getResources().getColor(R.color.Background);
         list = findViewById(R.id.list);
         searchBar = findViewById(R.id.textInputLayout);
         add = findViewById(R.id.add);
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         if (animation == toMiddle) {
             if (isFrontOfCardShowing) {
                 add.setImageResource(R.drawable.ic_baseline_note_add_24);
-                add.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorAccent)));
+                add.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.Secondary)));
                 add.setOnClickListener(addNote);
             } else {
                 add.setImageResource(R.drawable.ic_baseline_delete_24);
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         }else {
             showMode = true;
             toggle();
-            adapter.showAllNormal();
+            //TODO
         }
     }
 

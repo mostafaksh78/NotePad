@@ -66,9 +66,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setSelected(int p) {
-
-    }
 
     public Note getNote(int select) {
         return notes.get(select);
@@ -91,6 +88,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             date.setText(note.getDate().toString());
             cardView.setOnClickListener(listener.getListener(note,p));
             cardView.setOnLongClickListener(listener.getLongClickListener(note,true,p));
+            deSelected();
         }
 
         public void setSelected() {

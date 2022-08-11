@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#FFC107</color>
     <color name="colorAccent">#4CAF50</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="Secondary">#03DAC6</color>
+    <color name="colorPrimaryDark">#FFEB3B</color>
+    <color name="Secondary">#3F51B5</color>
     <color name="SecondaryVariant">#018786</color>
-    <color name="Surface">#FFFFFF</color>
-    <color name="Background">#FFFFFF</color>
-    <color name="OnPrimary">#FFFFFF</color>
+    <color name="Surface">#121212</color>
+    <color name="Background">#121212</color>
+    <color name="OnPrimary">#000000</color>
     <color name="OnSecondary">#000000</color>
-    <color name="OnSurface">#000000</color>
-    <color name="OnBackground">#000000</color>
-    <color name="OnError">#FFFFFF</color>
+    <color name="OnSurface">#FFFFFF</color>
+    <color name="OnBackground">#FFFFFF</color>
+    <color name="OnError">#000000</color>
     <color name="PrimaryVariant">#3700B3</color>
-    <color name="notes_list_title_color">#000000</color>
+    <color name="notes_list_title_color">#FFFFFF</color>
     <color name="notes_list_text_color">#5A5757</color>
     <color name="notes_list_time_color" >#5A5757</color>
-    <color name="notes_title_color">#070707</color>
+    <color name="notes_title_color">#CFCFCF</color>
     <color name="notes_text_color">#5A5757</color>
-    <color name="Error">#F30B0B</color>
-    <color name="card_selected">#C1BFBF</color>
+    <color name="card_selected">#717171</color>
+    <color name="Error">#CF6679</color>
 </resources>
