@@ -1,0 +1,21 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/Secondary</item>
+        <item name="colorSecondaryVariant">@color/SecondaryVariant</item>
+        <item name="colorSurface">@color/Surface</item>
+        <item name="android:colorBackground">@color/Background</item>
+        <item name="colorOnPrimary">@color/OnPrimary</item>
+        <item name="colorOnSecondary">@color/OnSecondary</item>
+        <item name="colorOnSurface">@color/OnSurface</item>
+        <item name="colorOnBackground">@color/OnBackground</item>
+        <item name="colorOnError">@color/OnError</item>
+        <item name="colorError">@color/Error</item>
+        <item name="colorPrimaryVariant">@color/PrimaryVariant</item>
+    </style>
+
+</resources>
