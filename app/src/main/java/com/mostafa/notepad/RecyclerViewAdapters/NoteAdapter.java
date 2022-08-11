@@ -1,5 +1,8 @@
 package com.mostafa.notepad.RecyclerViewAdapters;
 
+import android.content.res.ColorStateList;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +34,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-        holder.bind(notes.get(position),listener);
+        holder.bind(notes.get(position),listener,position);
     }
 
     @Override
@@ -59,6 +62,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return notes;
     }
 
+    public void showAllNormal() {
+        notifyDataSetChanged();
+    }
+
+    public void setSelected(int p) {
+
+    }
+
+    public Note getNote(int select) {
+        return notes.get(select);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private MaterialTextView title,text,date;
         private MaterialCardView cardView;
@@ -70,12 +85,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             cardView = itemView.findViewById(R.id.cardView);
         }
 
-        public void bind(final Note note, final ItemTouchedListener<Note> listener) {
+        public void bind(final Note note, final ItemTouchedListener<Note> listener,int p) {
             title.setText(note.getTitle());
             text.setText(note.getText());
             date.setText(note.getDate().toString());
-            cardView.setOnClickListener(listener.getListener(note));
-            cardView.setOnLongClickListener(listener.getLongClickListener(note,true));
+            cardView.setOnClickListener(listener.getListener(note,p));
+            cardView.setOnLongClickListener(listener.getLongClickListener(note,true,p));
+        }
+
+        public void setSelected() {
+            cardView.setBackgroundTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.card_selected)));
+        }
+
+        public void deSelected() {
+            cardView.setBackgroundTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.OnBackground)));
         }
     }
 }

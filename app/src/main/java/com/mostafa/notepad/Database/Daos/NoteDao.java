@@ -18,16 +18,18 @@ public abstract class NoteDao {
     public abstract void update(Note... notes);
     @Delete
     public abstract void delete(Note notes);
-    @Query("SELECT * FROM NOTES")
+    @Query("SELECT * FROM NOTES ORDER BY `index` ASC")
     public abstract List<Note> getAll();
     @Query("SELECT * FROM NOTES WHERE `index` = :index")
     public abstract Note getNote(int index);
 
     public void scrollIndex(int from, int to) {
-        // TODO
+        // index start form 1 in sqlite
+        from ++ ;
+        to ++;
         updateIndex(from,-1);
         if (from < to){ // kam be ziad
-            for (int i = from + 1; i <to + 1 ; i++) {
+            for (int i = from + 1; i <=to ; i++) {
                 updateIndex(i,i -1);
             }
         }else{ // ziad be kam

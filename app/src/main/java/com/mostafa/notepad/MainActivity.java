@@ -3,6 +3,7 @@ package com.mostafa.notepad;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     private Animation fromMiddle;
     private boolean isFrontOfCardShowing = false;
     private boolean showMode = true;
+    private List<Integer> selected = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +51,37 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         add.setOnClickListener(addNote);
         adapter = new NoteAdapter(new ArrayList<>(), new ItemTouchedListener<Note>() {
             @Override
-            public void onItemClick(Note note) {
-                NoteActivity.starter(MainActivity.this,note);
+            public void onItemClick(Note note,int p) {
+                if (showMode) {
+                    NoteActivity.starter(MainActivity.this,note);
+                }else {
+                    NoteAdapter.ViewHolder holder = (NoteAdapter.ViewHolder) (list.findViewHolderForAdapterPosition(p));
+                    if (holder != null) {
+                        if (!selected.contains(p)) {
+                            holder.setSelected();
+                            selected.add(p);
+                        }else {
+                            selected.remove(Integer.valueOf(p));
+                            holder.deSelected();
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onLongClick(Note note) {
+            public void onLongClick(Note note,int p) {
                 if (showMode) {
                     toggle();
                     showMode = false;
+                    NoteAdapter.ViewHolder holder = (NoteAdapter.ViewHolder) (list.findViewHolderForAdapterPosition(p));
+                    if (holder != null) {
+                        holder.setSelected();
+                        if (!selected.contains(p)) {
+                            selected.add(p);
+                        }else {
+                            selected.remove(Integer.valueOf(p));
+                        }
+                    }
                 }
             }
         });
@@ -89,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
             public void onNext(List<Note> notes) {
                 Log.d("Database","Notes : " + notes);
                 adapter.newItems(notes);
+
             }
 
             @Override
@@ -151,7 +176,11 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     private View.OnClickListener deleteNote = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            NoteActivity.starter(MainActivity.this);
+            for (int i = 0; i < selected.size(); i++) {
+                int select = selected.get(i);
+                adapter.notifyItemRemoved(select);
+                Global.database.getNoteDao().delete(adapter.getNote(select));
+            }
         }
     };
 
@@ -162,29 +191,26 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         }else {
             showMode = true;
             toggle();
+            adapter.showAllNormal();
         }
     }
+
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |ItemTouchHelper.START | ItemTouchHelper.END ,0 ) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int from = viewHolder.getAdapterPosition();
             int to  = target.getAdapterPosition();
             NoteAdapter adapter = (NoteAdapter) recyclerView.getAdapter();
-            adapter.notifyItemMoved(from,to);
-            Note[] notes = adapter.getItems(from,to);
-//            int zeroIndex = Math.min(from, to);
-//            for (int i = 0; i < notes.length; i++) {
-//                int lastIndex = notes[i].getIndex();
-//                int index = i + zeroIndex;
-//                Global.database.getNoteDao().updateIndex(lastIndex,index);
-//            }
+            if (adapter != null) {
+                adapter.notifyItemMoved(from,to);
+            }
             Global.database.getNoteDao().scrollIndex(from,to);
             return false;
         }
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+            Log.d("scrollDebug","On swiped : " + direction);
         }
     };
 }
